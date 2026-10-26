@@ -1,188 +1,186 @@
-import Link from "next/link";
-import type { ReactNode } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { Input } from "@/components/ui/input";
+"use client";
 
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
-    </svg>
-  );
-}
-
-function LinkedinIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0Z" />
-    </svg>
-  );
-}
-
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-    </svg>
-  );
-}
+import {
+  ArrowRight,
+  Sprout,
+  Music2,
+} from "lucide-react";
+import { BsInstagram, BsYoutube } from "react-icons/bs";
+import { FaFacebook } from "react-icons/fa";
 
 const quickLinks = [
-  { href: "/", label: "Home" },
-  { href: "/destinations", label: "Destinations" },
-  { href: "/bookings", label: "My Bookings" },
-  { href: "/profile", label: "My Profile" },
+  "Home",
+  "About Us",
+  "Contact",
+  "FAQ",
+  "Shipping Policy",
+  "Return Policy",
 ];
 
-const supportLinks = [
-  { href: "/help", label: "Help Center" },
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/privacy", label: "Privacy Policy" },
+const customerLinks = [
+  "My Account",
+  "Track Order",
+  "Wishlist",
+  "Help Center",
 ];
 
-const contactInfo = [
-  { label: "786 901 1622", href: "tel:7869011622" },
-  { label: "info@wandarland.com", href: "mailto:info@wandarland.com" },
-];
-
-const socialLinks = [
-  { href: "https://twitter.com", label: "Twitter", Icon: XIcon },
-  { href: "https://linkedin.com", label: "LinkedIn", Icon: LinkedinIcon },
-  { href: "https://instagram.com", label: "Instagram", Icon: InstagramIcon },
-];
-
-function ColumnHeading({ children }: { children: ReactNode }) {
+export default function Footer() {
   return (
-    <h3 className="text-sm font-semibold tracking-widest text-foreground uppercase">
-      {children}
-    </h3>
-  );
-}
+    <footer className="bg-[#292525] text-[#e9e1e1]">
+      <div className="mx-auto max-w-screen-2xl px-6 py-10 md:px-10">
+        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[1.1fr_0.8fr_0.9fr_1.3fr] lg:gap-8">
 
-export function Footer() {
-  return (
-    <footer className="bg-[#0a0a0a] px-6 pt-16 pb-10 text-white md:px-12">
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col gap-12 lg:flex-row lg:justify-between">
-          <div className="max-w-md">
-            <p className="font-heading text-5xl font-bold md:text-6xl">
-              Wanderlast
-            </p>
-            <p className="mt-4 text-white/70">
-              Your gateway to extraordinary travel experiences around the world.
-            </p>
-            <form className="mt-8 max-w-sm" action="#" aria-label="Newsletter">
-              <ColumnHeading>Newsletter</ColumnHeading>
-              <p className="mt-3 text-sm text-white/70">
-                Subscribe for exclusive travel deals and inspiration.
-              </p>
-              <div className="relative mt-4">
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  required
-                  aria-label="Email address"
-                  className="h-11 rounded-sm border-white/20 bg-white/10 pr-12 text-sm text-white placeholder:text-white/60 focus-visible:border-white/40 focus-visible:ring-white/30"
-                />
-                <button
-                  type="submit"
-                  aria-label="Subscribe"
-                  className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-white/80 transition-colors hover:text-white"
-                >
-                  <ArrowUpRight className="size-5" aria-hidden="true" />
-                </button>
+          {/* Brand */}
+          <div className="lg:pr-5">
+            <a href="/" className="inline-flex items-center gap-2">
+              <Sprout size={35} strokeWidth={1.8} />
+              <div>
+                <h2 className="font-serif text-3xl tracking-wide">
+                  Glowora
+                </h2>
+                <p className="text-[11px] tracking-wide text-[#c9bebe]">
+                  Beauty is Every You
+                </p>
               </div>
+            </a>
+          </div>
+
+          {/* Quick Links */}
+          <div className="border-l border-white/10 pl-6 lg:pl-8">
+            <h3 className="mb-5 text-sm font-semibold">
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link}>
+                  <a
+                    href={
+                      link === "Home"
+                        ? "/"
+                        : `/${link.toLowerCase().replaceAll(" ", "-")}`
+                    }
+                    className="text-sm text-[#c9bebe] transition hover:text-pink-300"
+                  >
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Customer Care */}
+          <div className="border-l border-white/10 pl-6 lg:pl-8">
+            <h3 className="mb-5 text-sm font-semibold">
+              Customer Care
+            </h3>
+            <ul className="space-y-3">
+              {customerLinks.map((link) => (
+                <li key={link}>
+                  <a
+                    href={`/${link.toLowerCase().replaceAll(" ", "-")}`}
+                    className="text-sm text-[#c9bebe] transition hover:text-pink-300"
+                  >
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social + Newsletter */}
+          <div className="border-l border-white/10 pl-6 lg:pl-8">
+            <h3 className="mb-5 text-sm font-semibold">
+              Stay Connected
+            </h3>
+
+            <div className="mb-7 flex items-center gap-5">
+              <a
+                href="https://facebook.com"
+                aria-label="Facebook"
+                className="transition hover:text-pink-400"
+              >
+                <FaFacebook size={19} />
+              </a>
+              <a
+                href="https://instagram.com"
+                aria-label="Instagram"
+                className="transition hover:text-pink-400"
+              >
+                <BsInstagram size={19} />
+              </a>
+              <a
+                href="https://youtube.com"
+                aria-label="YouTube"
+                className="transition hover:text-pink-400"
+              >
+                <BsYoutube size={20} />
+              </a>
+              <a
+                href="https://tiktok.com"
+                aria-label="TikTok"
+                className="transition hover:text-pink-400"
+              >
+                <Music2 size={19} />
+              </a>
+            </div>
+
+            <h4 className="mb-1 text-sm font-semibold">
+              Subscribe to our newsletter
+            </h4>
+            <p className="mb-4 text-xs leading-5 text-[#c9bebe]">
+              Get the latest updates, offers and more.
+            </p>
+
+            <form
+              action="/api/newsletter"
+              method="POST"
+              className="flex h-10 overflow-hidden rounded-lg bg-[#aaa0a3]"
+            >
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Your email address"
+                aria-label="Your email address"
+                className="min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-white/80"
+              />
+              <button
+                type="submit"
+                aria-label="Subscribe to newsletter"
+                className="flex w-11 shrink-0 items-center justify-center bg-[#f17d9b] text-[#292525] transition hover:bg-[#ff9db4]"
+              >
+                <ArrowRight size={19} />
+              </button>
             </form>
           </div>
-
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:gap-16">
-            <nav aria-labelledby="footer-quick-links">
-              <ColumnHeading>
-                <span id="footer-quick-links">Quick Links</span>
-              </ColumnHeading>
-              <ul className="mt-5 space-y-3">
-                {quickLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-white/70 transition-colors hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <nav aria-labelledby="footer-support">
-              <ColumnHeading>
-                <span id="footer-support">Support</span>
-              </ColumnHeading>
-              <ul className="mt-5 space-y-3">
-                {supportLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-white/70 transition-colors hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div aria-labelledby="footer-contact">
-              <ColumnHeading>
-                <span id="footer-contact">Contact Us</span>
-              </ColumnHeading>
-              <ul className="mt-5 space-y-3">
-                {contactInfo.map((contact) => (
-                  <li key={contact.href}>
-                    <a
-                      href={contact.href}
-                      className="text-white/70 transition-colors hover:text-white"
-                    >
-                      {contact.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </div>
+      </div>
 
-        <div className="mt-14 border-t border-white/10 pt-6">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="text-sm text-white/60">
-              © 2026 Wanderlust. All rights reserved.
-            </p>
-            <div className="flex items-center gap-5">
-              {socialLinks.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="text-white/80 transition-colors hover:text-white"
-                >
-                  <Icon className="size-5" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
+      {/* Bottom Bar */}
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-5 px-6 py-5 sm:flex-row md:px-10">
+          <p className="text-xs text-[#c9bebe]">
+            © 2025 Glowora. All rights reserved.
+          </p>
+
+          {/* Payment Methods */}
+          <div className="flex items-center gap-2">
+            <span className="flex h-6 items-center rounded bg-white px-2 text-[10px] font-black italic text-blue-700">
+              VISA
+            </span>
+            <span className="flex h-6 items-center rounded bg-white px-2">
+              <span className="h-3.5 w-3.5 rounded-full bg-red-500" />
+              <span className="-ml-1.5 h-3.5 w-3.5 rounded-full bg-yellow-400/90" />
+            </span>
+            <span className="flex h-6 items-center rounded bg-blue-700 px-2 text-[10px] font-bold text-white">
+              AMEX
+            </span>
+            <span className="flex h-6 w-7 items-center justify-center rounded bg-sky-500 text-xs font-bold text-white">
+              H
+            </span>
+            <span className="flex h-6 w-7 items-center justify-center rounded bg-cyan-500 text-xs font-bold text-white">
+              P
+            </span>
           </div>
         </div>
       </div>
