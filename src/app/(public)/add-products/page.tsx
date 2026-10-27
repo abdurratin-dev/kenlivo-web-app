@@ -77,7 +77,7 @@ export default function AddTravelPackage() {
   return (
     <section className="min-h-screen px-5 py-10 sm:px-8">
       <div className="h-30"></div>
-      <h1 className="font-serif text-3xl text-center font-normal tracking-tight text-[#171717] sm:text-[34px]">
+      <h1 className="font-heading text-3xl text-center font-normal tracking-tight text-[#171717] sm:text-[34px]">
         Add New Product
       </h1>
 

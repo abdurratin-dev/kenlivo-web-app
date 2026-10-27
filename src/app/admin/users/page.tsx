@@ -56,7 +56,7 @@ export default function AdminUsersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl font-semibold text-[#492a30]">Customers</h1>
+          <h1 className="font-heading text-2xl font-semibold text-[#492a30]">Customers</h1>
           {meta && <p className="mt-0.5 text-sm text-[#987b7e]">{meta.total} total</p>}
         </div>
       </div>

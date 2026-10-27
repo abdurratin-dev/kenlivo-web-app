@@ -43,7 +43,7 @@ export default function AdminSidebar() {
           <div className="flex size-7 items-center justify-center rounded-full bg-[#fce8e6]">
             <Sparkles className="size-3.5 text-[#a84759]" />
           </div>
-          <span className="font-serif font-bold text-[#713944]">Kenlivo</span>
+          <span className="font-heading font-bold text-[#713944]">Kenlivo</span>
         </Link>
         <button
           onClick={() => setOpen(!open)}
@@ -75,7 +75,7 @@ export default function AdminSidebar() {
             <Sparkles className="size-4 text-[#a84759]" />
           </div>
           <div>
-            <p className="font-serif font-bold leading-none text-white">Kenlivo</p>
+            <p className="font-heading font-bold leading-none text-white">Kenlivo</p>
             <p className="text-[10px] text-[#f2bdba]/70 mt-0.5">Admin Panel</p>
           </div>
         </div>

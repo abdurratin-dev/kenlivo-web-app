@@ -26,7 +26,7 @@ export default function Footer() {
             <a href="/" className="inline-flex items-center gap-2">
               <Sprout size={35} strokeWidth={1.8} />
               <div>
-                <h2 className="font-serif text-3xl tracking-wide">Kenlivo</h2>
+                <h2 className="font-heading text-3xl tracking-wide">Kenlivo</h2>
                 <p className="text-[11px] tracking-wide text-[#c9bebe]">
                   Beauty Meets Lifestyle
                 </p>

@@ -79,7 +79,7 @@ export default function SignUpForm({
                     <div className="flex size-10 items-center justify-center rounded-full bg-[#fce8e6] text-[#a84759]">
                       <Sparkles className="size-5" />
                     </div>
-                    <span className="text-2xl font-serif font-bold tracking-tight text-[#713944]">
+                    <span className="text-2xl font-heading font-bold tracking-tight text-[#713944]">
                       Kenlivo
                     </span>
                   </div>
@@ -89,7 +89,7 @@ export default function SignUpForm({
                 </div>
 
                 <div className="mb-2 space-y-2 text-center">
-                  <h1 className="text-3xl font-serif font-semibold tracking-tight text-[#492a30]">
+                  <h1 className="text-3xl font-heading font-semibold tracking-tight text-[#492a30]">
                     Create Account
                   </h1>
                   <p className="text-sm leading-6 text-[#987b7e]">
@@ -217,7 +217,7 @@ export default function SignUpForm({
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[#ffe0d9]">
                   Discover Your Glow
                 </p>
-                <h2 className="max-w-md text-4xl font-serif font-semibold leading-tight lg:text-5xl">
+                <h2 className="max-w-md text-4xl font-heading font-semibold leading-tight lg:text-5xl">
                   Glow Naturally,
                   <br />
                   Look Beautiful.
@@ -248,7 +248,7 @@ export default function SignUpForm({
           </a>
           .
         </p>
-        <p className="mt-3 text-center font-serif text-sm italic text-[#c69a9e]">
+        <p className="mt-3 text-center font-heading text-sm italic text-[#c69a9e]">
           Beauty is not just a look, it&apos;s a feeling ♡
         </p>
       </div>

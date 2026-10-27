@@ -76,7 +76,7 @@ export default function EditProductPage() {
         <Link href="/admin/products" className="rounded-xl border border-[#ead8d7] p-2 hover:bg-[#fff5f3]">
           <ArrowLeft className="size-4 text-[#65454b]" />
         </Link>
-        <h1 className="font-serif text-2xl font-semibold text-[#492a30]">Edit Product</h1>
+        <h1 className="font-heading text-2xl font-semibold text-[#492a30]">Edit Product</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="rounded-2xl border border-[#f4dedb] bg-white p-6 shadow-sm space-y-4">

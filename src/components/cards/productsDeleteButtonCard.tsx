@@ -42,7 +42,7 @@ export default function DeleteButton({
                 />
               </div>
 
-              <h2 className="font-serif text-[26px] leading-tight tracking-[-1.1px] text-[#111111] sm:text-[30px]">
+              <h2 className="font-heading text-[26px] leading-tight tracking-[-1.1px] text-[#111111] sm:text-[30px]">
                 Delete Travel Package
               </h2>
             </div>

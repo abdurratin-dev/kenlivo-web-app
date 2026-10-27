@@ -42,7 +42,7 @@ export default function BeautyBanner() {
               Your Beauty, Your Way
             </span>
 
-            <h2 className="mt-3 font-serif text-3xl font-bold leading-tight text-[#a63250] sm:text-4xl">
+            <h2 className="mt-3 font-heading text-3xl font-bold leading-tight text-[#a63250] sm:text-4xl">
               Real Beauty
               <br />
               Real You

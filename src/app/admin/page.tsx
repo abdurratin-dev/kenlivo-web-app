@@ -41,7 +41,7 @@ export default function AdminOverview() {
     return (
       <section className="flex min-h-[60vh] flex-col items-center justify-center gap-3 text-center">
         <ShieldAlert className="text-[#B95770]" size={40} />
-        <h1 className="font-serif text-2xl text-[#171717]">Admin access required</h1>
+        <h1 className="font-heading text-2xl text-[#171717]">Admin access required</h1>
       </section>
     );
   }
@@ -56,7 +56,7 @@ export default function AdminOverview() {
   return (
     <div className="space-y-8 pt-2">
       <div>
-        <h1 className="font-serif text-2xl font-semibold text-[#492a30]">Dashboard Overview</h1>
+        <h1 className="font-heading text-2xl font-semibold text-[#492a30]">Dashboard Overview</h1>
         <p className="mt-1 text-sm text-[#987b7e]">Welcome back, {user.name}</p>
       </div>
 
@@ -82,7 +82,7 @@ export default function AdminOverview() {
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Order status breakdown */}
         <div className="rounded-2xl border border-[#f4dedb] bg-white p-5 shadow-sm">
-          <h2 className="mb-4 font-serif text-base font-semibold text-[#492a30]">Orders by Status</h2>
+          <h2 className="mb-4 font-heading text-base font-semibold text-[#492a30]">Orders by Status</h2>
           {Object.keys(statusBadge).map((s) => {
             const count = ordersByStatus[s] ?? 0;
             const total = orders.length || 1;
@@ -106,7 +106,7 @@ export default function AdminOverview() {
         {/* Recent orders */}
         <div className="rounded-2xl border border-[#f4dedb] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-serif text-base font-semibold text-[#492a30]">Recent Orders</h2>
+            <h2 className="font-heading text-base font-semibold text-[#492a30]">Recent Orders</h2>
             <Link href="/admin/orders" className="text-xs text-[#b94f64] hover:underline">View all</Link>
           </div>
           <div className="space-y-3">
