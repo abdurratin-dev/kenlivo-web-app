@@ -46,10 +46,18 @@ export interface CategoryInput {
   isActive?: boolean;
 }
 
+export interface CategoryListQuery {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
 export const categoriesApi = {
-  async list() {
-    const { data } = await api.get<ApiEnvelope<Category[]>>("/categories", { params: { limit: 100 } });
-    return data.data;
+  async list(query: CategoryListQuery = {}) {
+    const { data } = await api.get<ApiEnvelope<Category[]>>("/categories", {
+      params: query.page ? query : { limit: 100, ...query },
+    });
+    return { items: data.data, meta: data.meta };
   },
 
   async create(payload: CategoryInput) {

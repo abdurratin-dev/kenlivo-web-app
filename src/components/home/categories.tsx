@@ -17,9 +17,9 @@ const imageClass = `absolute inset-0 h-full w-full object-cover mix-blend-multip
 const imageSizes = "(min-width: 1280px) 216px, (min-width: 1024px) 24vw, (min-width: 640px) 31vw, 45vw";
 
 export function Categories() {
-  const { data: categories, isLoading } = useCategories();
+  const { data, isLoading } = useCategories();
 
-  const active = categories?.filter((c) => c.isActive) ?? [];
+  const active = data?.items?.filter((c) => c.isActive) ?? [];
 
   if (!isLoading && active.length === 0) return null;
 

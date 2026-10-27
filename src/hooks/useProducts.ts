@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { categoriesApi, productsApi, type CategoryInput, type ProductInput } from "@/lib/api/products";
+import { categoriesApi, productsApi, type CategoryInput, type CategoryListQuery, type ProductInput } from "@/lib/api/products";
 import { queryKeys } from "@/lib/api/query-keys";
 import type { ProductListQuery } from "@/lib/api/types";
 
@@ -20,10 +20,10 @@ export function useProduct(id: string) {
   });
 }
 
-export function useCategories() {
+export function useCategories(query: CategoryListQuery = {}) {
   return useQuery({
-    queryKey: queryKeys.categories.list,
-    queryFn: () => categoriesApi.list(),
+    queryKey: [...queryKeys.categories.list, query],
+    queryFn: () => categoriesApi.list(query),
     staleTime: 10 * 60_000,
   });
 }
