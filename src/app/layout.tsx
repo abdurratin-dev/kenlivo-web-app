@@ -23,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${playfairDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        
         <Navbar />
         <main className="bg-[#FFF9F2]">
         {children}

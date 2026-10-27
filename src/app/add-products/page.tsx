@@ -16,7 +16,7 @@ export default function AddTravelPackage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const res = await fetch('http://localhost:5000/products',{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_KENLIVO_DATA_API}products`,{
         method: 'POST',
         headers:{
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export default function AddTravelPackage() {
     <section className="min-h-screen px-5 py-10 sm:px-8">
       <div className="h-30"></div>
       <h1 className="font-serif text-3xl text-center font-normal tracking-tight text-[#171717] sm:text-[34px]">
-        Add New Travel Package
+        Add New Product
       </h1>
 
       <div className="mx-auto mt-12 w-full max-w-5xl border border-gray-100 bg-white px-5 py-6 shadow-[0_2px_4px_rgba(0,0,0,0.12)] sm:mt-14 sm:px-6 sm:py-6 rounded-2xl">

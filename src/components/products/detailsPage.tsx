@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   ChevronRight,
   Heart,
@@ -16,6 +16,7 @@ import DeleteButton from "../cards/productsDeleteButtonCard";
 import { use, useState } from "react";
 import { ProductType } from "@/types/AllDataType";
 import Image from "next/image";
+import OrderSummaryCard from "../cards/orderSummaryCard";
 
 const shades = [
   { name: "Bombshell", color: "#ed9b8c" },
@@ -27,14 +28,20 @@ const shades = [
 
 const tabs = ["Description", "Reviews"];
 
-export default function DetailsPage({ productData}:{productData: ProductType}) {
+export default function DetailsPage({
+  productData,
+}: {
+  productData: ProductType;
+}) {
   console.log(productData);
+  const [customerData, setCustomerData] = useState({});
   const [selectedShade, setSelectedShade] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("Description");
   const [activeImage, setActiveImage] = useState(0);
   const [added, setAdded] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [order, setOrder] = useState(false);
   const gallery = [
     { label: "Product", icon: "💄" },
     { label: "Lipstick", icon: "💋" },
@@ -44,6 +51,17 @@ export default function DetailsPage({ productData}:{productData: ProductType}) {
   const tabContent: Record<string, string> = {
     Description: productData?.description,
   };
+  if (order) {
+    return (
+      <>
+        <div className="w-full">
+          <OrderSummaryCard
+            productData={productData}
+          />
+        </div>
+      </>
+    );
+  }
   return (
     <main className="min-h-screen text-[#292323]">
       <div className="h-30"></div>
@@ -250,11 +268,12 @@ export default function DetailsPage({ productData}:{productData: ProductType}) {
               </button>
 
               <button
-                onClick={() =>
+                onClick={() => {
                   alert(
                     `Checkout: ${quantity} × Huda Beauty Matte Lipstick (${shades[selectedShade].name})`,
-                  )
-                }
+                  );
+                  setOrder(true);
+                }}
                 className="h-12 rounded-md bg-[#c69a52] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#b48842] active:scale-[0.99]"
               >
                 Buy Now

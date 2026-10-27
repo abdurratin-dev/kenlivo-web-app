@@ -51,7 +51,7 @@ export function Banner() {
 
           <div className="mt-9">
             <Link
-              href="/makeup"
+              href="/products"
               className="group inline-flex items-center gap-3 rounded-full bg-[#C1494F] px-8 py-4 text-base font-semibold text-white shadow-[0_16px_32px_-16px_rgba(169,59,68,0.9)] transition-colors hover:bg-[#A93B44]"
             >
               Shop Now

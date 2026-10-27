@@ -25,32 +25,32 @@ type Category = {
 
 const categories: Category[] = [
   {
-    name: "Makeup",
-    href: "/makeup",
+    name: "Cream",
+    href: "/cream",
     image: `https://images.unsplash.com/photo-1512496015851-a90fb38ba796${imageParams}`,
     alt: "Assorted makeup compacts, lipsticks and brushes",
   },
   {
-    name: "Skincare",
-    href: "/skincare",
+    name: "Face Wash",
+    href: "/face-wash",
     image: `https://images.unsplash.com/photo-1556228720-195a672e8a03${imageParams}`,
     alt: "Facial cleanser tube on a light background",
   },
   {
-    name: "Haircare",
-    href: "/haircare",
+    name: "Lotion",
+    href: "/lotion",
     image: `https://images.unsplash.com/photo-1522338140262-f46f5913618a${imageParams}`,
     alt: "Hair dryer against a warm pink backdrop",
   },
   {
-    name: "Fragrance",
-    href: "/fragrance",
+    name: "Sunscreen",
+    href: "/sunscreen",
     image: `https://images.unsplash.com/photo-1592945403244-b3fbafd7f539${imageParams}`,
     alt: "Perfume bottle surrounded by blush roses",
   },
   {
-    name: "Tools",
-    href: "/tools",
+    name: "Serum",
+    href: "/serum",
     image: `https://images.unsplash.com/photo-1503236823255-94609f598e71${imageParams}`,
     alt: "Makeup brush resting on a powder compact",
   },

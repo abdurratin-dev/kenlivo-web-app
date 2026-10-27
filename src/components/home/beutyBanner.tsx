@@ -55,7 +55,7 @@ export default function BeautyBanner() {
 
             <Link
               href="/categories/skincare"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#b44460] px-5 py-3 text-sm font-semibold text-white shadow-md shadow-rose-200 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#96354e]"
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#b44460] px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#96354e]"
             >
               Shop Skincare
               <FiArrowRight size={16} />
@@ -63,15 +63,15 @@ export default function BeautyBanner() {
           </div>
 
           {/* Hero Image */}
-          <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[43%] sm:w-[46%]">
-            {/* <Image
-              src="/images/beauty-banner.png"
+          <div>
+            <Image
+              src="https://static.vecteezy.com/system/resources/thumbnails/043/533/156/small/a-woman-with-a-flower-headband-and-a-pink-beauty-banner-background-photo.jpeg"
               alt="Skincare beauty collection"
               fill
               priority
               sizes="(max-width: 768px) 45vw, 25vw"
               className="object-cover object-center"
-            /> */}
+            />
           </div>
         </div>
 

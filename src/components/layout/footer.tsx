@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ArrowRight,
-  Sprout,
-  Music2,
-} from "lucide-react";
+import { ArrowRight, Sprout, Music2 } from "lucide-react";
 import { BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 
@@ -17,29 +13,22 @@ const quickLinks = [
   "Return Policy",
 ];
 
-const customerLinks = [
-  "My Account",
-  "Track Order",
-  "Wishlist",
-  "Help Center",
-];
+const customerLinks = ["My Account", "Track Order", "Wishlist", "Help Center"];
 
 export default function Footer() {
+  const date = new Date().getFullYear();
   return (
     <footer className="bg-[#292525] text-[#e9e1e1]">
       <div className="mx-auto max-w-screen-2xl px-6 py-10 md:px-10">
         <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[1.1fr_0.8fr_0.9fr_1.3fr] lg:gap-8">
-
           {/* Brand */}
           <div className="lg:pr-5">
             <a href="/" className="inline-flex items-center gap-2">
               <Sprout size={35} strokeWidth={1.8} />
               <div>
-                <h2 className="font-serif text-3xl tracking-wide">
-                  Glowora
-                </h2>
+                <h2 className="font-serif text-3xl tracking-wide">Kenlivo</h2>
                 <p className="text-[11px] tracking-wide text-[#c9bebe]">
-                  Beauty is Every You
+                  Beauty Meets Lifestyle
                 </p>
               </div>
             </a>
@@ -47,9 +36,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="border-l border-white/10 pl-6 lg:pl-8">
-            <h3 className="mb-5 text-sm font-semibold">
-              Quick Links
-            </h3>
+            <h3 className="mb-5 text-sm font-semibold">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link}>
@@ -70,9 +57,7 @@ export default function Footer() {
 
           {/* Customer Care */}
           <div className="border-l border-white/10 pl-6 lg:pl-8">
-            <h3 className="mb-5 text-sm font-semibold">
-              Customer Care
-            </h3>
+            <h3 className="mb-5 text-sm font-semibold">Customer Care</h3>
             <ul className="space-y-3">
               {customerLinks.map((link) => (
                 <li key={link}>
@@ -89,9 +74,7 @@ export default function Footer() {
 
           {/* Social + Newsletter */}
           <div className="border-l border-white/10 pl-6 lg:pl-8">
-            <h3 className="mb-5 text-sm font-semibold">
-              Stay Connected
-            </h3>
+            <h3 className="mb-5 text-sm font-semibold">Stay Connected</h3>
 
             <div className="mb-7 flex items-center gap-5">
               <a
@@ -107,13 +90,6 @@ export default function Footer() {
                 className="transition hover:text-pink-400"
               >
                 <BsInstagram size={19} />
-              </a>
-              <a
-                href="https://youtube.com"
-                aria-label="YouTube"
-                className="transition hover:text-pink-400"
-              >
-                <BsYoutube size={20} />
               </a>
               <a
                 href="https://tiktok.com"
@@ -160,27 +136,11 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-5 px-6 py-5 sm:flex-row md:px-10">
           <p className="text-xs text-[#c9bebe]">
-            © 2025 Glowora. All rights reserved.
+            © {date} Kenlivo. All rights reserved.
           </p>
 
           {/* Payment Methods */}
           <div className="flex items-center gap-2">
-            <span className="flex h-6 items-center rounded bg-white px-2 text-[10px] font-black italic text-blue-700">
-              VISA
-            </span>
-            <span className="flex h-6 items-center rounded bg-white px-2">
-              <span className="h-3.5 w-3.5 rounded-full bg-red-500" />
-              <span className="-ml-1.5 h-3.5 w-3.5 rounded-full bg-yellow-400/90" />
-            </span>
-            <span className="flex h-6 items-center rounded bg-blue-700 px-2 text-[10px] font-bold text-white">
-              AMEX
-            </span>
-            <span className="flex h-6 w-7 items-center justify-center rounded bg-sky-500 text-xs font-bold text-white">
-              H
-            </span>
-            <span className="flex h-6 w-7 items-center justify-center rounded bg-cyan-500 text-xs font-bold text-white">
-              P
-            </span>
           </div>
         </div>
       </div>

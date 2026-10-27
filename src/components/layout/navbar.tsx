@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Heart, Search, ShoppingBag, User } from "lucide-react";
+import { Compass, Heart, LogIn, Search, ShoppingBag, User } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -17,12 +18,17 @@ const navLinks = [
 // Placeholder until bookings are wired up to a real store.
 const bookingCount = 1;
 
-const iconLinks = [
-  { href: "/profile", label: "Account", Icon: User },
-  { href: "/destinations", label: "Saved destinations", Icon: Heart },
-];
 
 export function Navbar() {
+  const {data:sesion,error} = authClient.useSession();
+  const user = sesion?.user
+  const iconLinks = user ? [
+  { href: "/profile", label: "Account", Icon: User },
+  { href: "/destinations", label: "Saved destinations", Icon: Heart },
+] : [
+  { href: "/login", label: "Account", Icon: LogIn },
+  { href: "/destinations", label: "Saved destinations", Icon: Heart },
+]
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
@@ -62,7 +68,7 @@ export function Navbar() {
 
           <form
             role="search"
-            action="/destinations"
+            action="/products"
             className="relative mx-auto hidden h-11 w-full min-w-0 max-w-xl flex-1 items-center sm:flex md:h-12"
           >
             <Search
@@ -97,13 +103,13 @@ export function Navbar() {
               </Link>
             ))}
             <Link
-              href="/bookings"
-              aria-label={`My bookings (${bookingCount} trip)`}
+              href="/orders"
+              aria-label={`My bookings ( trip)`}
               className="relative grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-[#B95770]/10 hover:text-[#B95770]"
             >
               <ShoppingBag className="size-5" aria-hidden="true" />
               <span className="absolute top-1 right-1 grid size-4 place-items-center rounded-full bg-[#B95770] text-[10px] leading-none font-semibold text-white">
-                {bookingCount}
+                
               </span>
             </Link>
           </div>
