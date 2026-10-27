@@ -39,9 +39,30 @@ export const productsApi = {
   },
 };
 
+export interface CategoryInput {
+  name: string;
+  description?: string;
+  image?: string;
+  isActive?: boolean;
+}
+
 export const categoriesApi = {
   async list() {
-    const { data } = await api.get<ApiEnvelope<Category[]>>("/categories");
+    const { data } = await api.get<ApiEnvelope<Category[]>>("/categories", { params: { limit: 100 } });
     return data.data;
+  },
+
+  async create(payload: CategoryInput) {
+    const { data } = await api.post<ApiEnvelope<Category>>("/categories", payload);
+    return data.data;
+  },
+
+  async update(id: string, payload: Partial<CategoryInput>) {
+    const { data } = await api.patch<ApiEnvelope<Category>>(`/categories/${id}`, payload);
+    return data.data;
+  },
+
+  async remove(id: string) {
+    await api.delete(`/categories/${id}`);
   },
 };
