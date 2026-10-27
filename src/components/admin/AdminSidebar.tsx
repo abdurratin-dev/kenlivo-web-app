@@ -7,6 +7,7 @@ import {
   Package,
   ShoppingCart,
   Users,
+  Tag,
   LogOut,
   Sparkles,
   Menu,
@@ -16,10 +17,11 @@ import { useState } from "react";
 import { useLogout } from "@/hooks/useAuth";
 
 const navItems = [
-  { label: "Overview",  href: "/admin",          icon: LayoutDashboard },
-  { label: "Products",  href: "/admin/products",  icon: Package },
-  { label: "Orders",    href: "/admin/orders",    icon: ShoppingCart },
-  { label: "Customers", href: "/admin/users",     icon: Users },
+  { label: "Overview",   href: "/admin",             icon: LayoutDashboard },
+  { label: "Products",   href: "/admin/products",    icon: Package },
+  { label: "Categories", href: "/admin/categories",  icon: Tag },
+  { label: "Orders",     href: "/admin/orders",      icon: ShoppingCart },
+  { label: "Customers",  href: "/admin/users",       icon: Users },
 ];
 
 export default function AdminSidebar() {
