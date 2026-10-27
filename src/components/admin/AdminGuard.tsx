@@ -8,14 +8,16 @@ import { Loader2 } from "lucide-react";
 
 export default function AdminGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  // Lazy init: reads localStorage once on client mount
-  const [hasToken] = useState(() => {
-    if (typeof window === "undefined") return true; // SSR: let it through, client will verify
-    return !!tokenStore.get();
-  });
+  const [mounted, setMounted] = useState(false);
   const { data: user, isLoading } = useCurrentUser();
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const hasToken = !!tokenStore.get();
     if (!hasToken) {
       router.replace("/login");
       return;
@@ -23,11 +25,17 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
     if (!isLoading && (!user || user.role !== "admin")) {
       router.replace("/login");
     }
-  }, [hasToken, user, isLoading, router]);
+  }, [mounted, user, isLoading, router]);
 
-  // No token — show nothing while redirect fires
+  // Before hydration: render nothing — server and client agree
+  if (!mounted) return null;
+
+  const hasToken = !!tokenStore.get();
+
+  // No token — blank while redirect fires
   if (!hasToken) return null;
 
+  // Token present, query resolving
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#fff8f6]">
@@ -36,6 +44,7 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
     );
   }
 
+  // Not admin
   if (!user || user.role !== "admin") return null;
 
   return <>{children}</>;
