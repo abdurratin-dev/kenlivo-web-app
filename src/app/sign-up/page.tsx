@@ -14,25 +14,39 @@ import { Label } from "@/components/ui/label";
 import { InputGroup, TextField } from "@heroui/react";
 import { ArrowRight, Eye, EyeOff, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import { useRegister } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [isVisible, setIsVisible] = useState(false);
-  const onSubmit = async(e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries()) as Record<string, string>;
-    const {data:userData,error} = await authClient.signUp.email({
-        name: data.name,
-        email: data.email,
-        password: data.password
+  const [error, setError] = useState<string | null>(null);
+  const register = useRegister();
+  const router = useRouter();
 
-    })
-    console.log(userData,error);
+  const onSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    register.mutate(
+      { name, email, password },
+      {
+        onSuccess: () => router.push("/"),
+        onError: (err: unknown) => {
+          const msg =
+            err instanceof Error ? err.message : "Registration failed. Please try again.";
+          setError(msg);
+        },
+      }
+    );
   };
+
   return (
     <div
       className={cn(
@@ -59,7 +73,6 @@ export default function SignUpForm({
                       Kenlivo
                     </span>
                   </div>
-
                   <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#b77b83]">
                     Beauty Meets Lifestyle
                   </p>
@@ -73,15 +86,20 @@ export default function SignUpForm({
                     Begin your beauty journey with Kenlivo.
                   </p>
                 </div>
+
+                {error && (
+                  <p className="rounded-xl bg-red-50 px-4 py-3 text-center text-sm text-red-600">
+                    {error}
+                  </p>
+                )}
+
                 <Fieldset>
                   <FieldGroup>
                     <TextField
                       isRequired
                       name="name"
                       validate={(value) => {
-                        if (value.length < 3) {
-                          return "Name must be at least 3 characters";
-                        }
+                        if (value.length < 3) return "Name must be at least 3 characters";
                         return null;
                       }}
                     >
@@ -89,8 +107,8 @@ export default function SignUpForm({
                         Full Name
                       </Label>
                       <Input
-                      name="name"
-                      type="text"
+                        name="name"
+                        type="text"
                         placeholder="Enter your full name"
                         className="h-12 rounded-xl border-[#ead8d7] bg-[#fffdfc] px-4 text-sm placeholder:text-[#c2aaab] focus-visible:border-[#c66f7d] focus-visible:ring-[#f3d5d8]"
                       />
@@ -101,8 +119,8 @@ export default function SignUpForm({
                         Email Address
                       </Label>
                       <Input
-                      name="email"
-                      type="email"
+                        name="email"
+                        type="email"
                         placeholder="you@example.com"
                         className="h-12 rounded-xl border-[#ead8d7] bg-[#fffdfc] px-4 text-sm placeholder:text-[#c2aaab] focus-visible:border-[#c66f7d] focus-visible:ring-[#f3d5d8]"
                       />
@@ -114,6 +132,7 @@ export default function SignUpForm({
                       </Label>
                       <InputGroup className="relative">
                         <InputGroup.Input
+                          name="password"
                           type={isVisible ? "text" : "password"}
                           placeholder="Enter your password"
                           className="h-12 rounded-xl border-[#ead8d7] bg-[#fffdfc] px-4 pr-12 text-sm placeholder:text-[#c2aaab] focus-visible:border-[#c66f7d] focus-visible:ring-[#f3d5d8]"
@@ -122,9 +141,7 @@ export default function SignUpForm({
                           <Button
                             type="button"
                             isIconOnly
-                            aria-label={
-                              isVisible ? "Hide password" : "Show password"
-                            }
+                            aria-label={isVisible ? "Hide password" : "Show password"}
                             size="sm"
                             variant="ghost"
                             onPress={() => setIsVisible(!isVisible)}
@@ -142,10 +159,11 @@ export default function SignUpForm({
 
                     <Button
                       type="submit"
+                      isLoading={register.isPending}
                       className="h-12 w-full rounded-xl bg-[#c96778] text-sm font-semibold text-white shadow-md shadow-[#c96778]/20 transition-all hover:bg-[#ad5064] hover:shadow-lg"
                     >
+                      {!register.isPending && <ArrowRight className="mr-2 size-4" />}
                       Create Account
-                      <ArrowRight className="ml-2 size-4" />
                     </Button>
                   </FieldGroup>
                 </Fieldset>
@@ -165,7 +183,7 @@ export default function SignUpForm({
                       className="mr-2 size-4"
                     >
                       <path
-                        d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                        d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
                         fill="currentColor"
                       />
                     </svg>
@@ -192,32 +210,26 @@ export default function SignUpForm({
                 alt="Glowora beauty and skincare collection"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-
               <div className="absolute inset-0 bg-gradient-to-t from-[#512d35]/85 via-[#6e3d45]/10 to-[#fff4f0]/10" />
-
               <div className="absolute left-8 right-8 top-9">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/50 bg-white/60 px-4 py-2 text-xs font-medium text-[#713944] backdrop-blur-md">
                   <Sparkles className="size-3.5" />
                   YOUR BEAUTY, OUR PASSION
                 </span>
               </div>
-
               <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10 text-white">
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[#ffe0d9]">
                   Discover Your Glow
                 </p>
-
                 <h2 className="max-w-md text-4xl font-serif font-semibold leading-tight lg:text-5xl">
                   Glow Naturally,
                   <br />
                   Look Beautiful.
                 </h2>
-
                 <p className="mt-4 max-w-sm text-sm leading-7 text-white/85">
                   Explore premium skincare, cosmetics, and everyday beauty
                   essentials made to celebrate your natural glow.
                 </p>
-
                 <div className="mt-7 flex items-center gap-3">
                   <div className="h-px w-10 bg-[#f2bdba]" />
                   <span className="text-xs tracking-widest text-[#ffe0d9]">
@@ -231,24 +243,17 @@ export default function SignUpForm({
 
         <p className="mt-6 text-center text-xs leading-6 text-[#a78b8d]">
           By creating an account, you agree to our{" "}
-          <a
-            href="/terms"
-            className="text-[#b94f64] underline underline-offset-4"
-          >
+          <a href="/terms" className="text-[#b94f64] underline underline-offset-4">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a
-            href="/privacy"
-            className="text-[#b94f64] underline underline-offset-4"
-          >
+          <a href="/privacy" className="text-[#b94f64] underline underline-offset-4">
             Privacy Policy
           </a>
           .
         </p>
-
         <p className="mt-3 text-center font-serif text-sm italic text-[#c69a9e]">
-          Beauty is not just a look, it’s a feeling ♡
+          Beauty is not just a look, it&apos;s a feeling ♡
         </p>
       </div>
     </div>
