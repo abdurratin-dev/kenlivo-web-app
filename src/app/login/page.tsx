@@ -14,24 +14,44 @@ import { Label } from "@/components/ui/label";
 import { InputGroup, TextField } from "@heroui/react";
 import { ArrowRight, Eye, EyeOff, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import { useLogin } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [isVisible, setIsVisible] = useState(false);
-  const onSubmit = async(e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries()) as Record<string, string>;
-    const {data:userData,error} = await authClient.signIn.email({
-        email: data.email,
-        password: data.password
+  const [error, setError] = useState<string | null>(null);
+  const login = useLogin();
+  const router = useRouter();
 
-    })
-    console.log(userData,error);
+  const onSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    login.mutate(
+      { email, password },
+      {
+        onSuccess: (user) => {
+          if (user.role === "admin") {
+            router.push("/admin");
+          } else {
+            router.push("/");
+          }
+        },
+        onError: (err: unknown) => {
+          const msg =
+            err instanceof Error ? err.message : "Invalid email or password";
+          setError(msg);
+        },
+      }
+    );
   };
+
   return (
     <div
       className={cn(
@@ -45,7 +65,7 @@ export default function LoginForm({
         <div className="h-30"></div>
         <Card className="overflow-hidden rounded-3xl border border-[#f4dedb] bg-white p-0 shadow-[0_20px_70px_rgba(139,67,74,0.10)]">
           <CardContent className="grid p-0 md:grid-cols-2">
-            {/* Register Form */}
+            {/* Login Form */}
             <Form className="p-7 sm:p-10 lg:p-12" onSubmit={onSubmit}>
               <FieldGroup className="gap-5">
                 {/* Brand */}
@@ -72,16 +92,22 @@ export default function LoginForm({
                     Begin your beauty journey with Kenlivo.
                   </p>
                 </div>
+
+                {error && (
+                  <p className="rounded-xl bg-red-50 px-4 py-3 text-center text-sm text-red-600">
+                    {error}
+                  </p>
+                )}
+
                 <Fieldset>
                   <FieldGroup>
-
                     <TextField isRequired name="email" type="email">
                       <Label className="text-sm font-medium text-[#65454b]">
                         Email Address
                       </Label>
                       <Input
-                      name="email"
-                      type="email"
+                        name="email"
+                        type="email"
                         placeholder="you@example.com"
                         className="h-12 rounded-xl border-[#ead8d7] bg-[#fffdfc] px-4 text-sm placeholder:text-[#c2aaab] focus-visible:border-[#c66f7d] focus-visible:ring-[#f3d5d8]"
                       />
@@ -89,10 +115,11 @@ export default function LoginForm({
 
                     <TextField isRequired name="password">
                       <Label className="text-sm font-medium text-[#65454b]">
-                        Create Password
+                        Password
                       </Label>
                       <InputGroup className="relative">
                         <InputGroup.Input
+                          name="password"
                           type={isVisible ? "text" : "password"}
                           placeholder="Enter your password"
                           className="h-12 rounded-xl border-[#ead8d7] bg-[#fffdfc] px-4 pr-12 text-sm placeholder:text-[#c2aaab] focus-visible:border-[#c66f7d] focus-visible:ring-[#f3d5d8]"
@@ -101,9 +128,7 @@ export default function LoginForm({
                           <Button
                             type="button"
                             isIconOnly
-                            aria-label={
-                              isVisible ? "Hide password" : "Show password"
-                            }
+                            aria-label={isVisible ? "Hide password" : "Show password"}
                             size="sm"
                             variant="ghost"
                             onPress={() => setIsVisible(!isVisible)}
@@ -121,10 +146,11 @@ export default function LoginForm({
 
                     <Button
                       type="submit"
+                      isLoading={login.isPending}
                       className="h-12 w-full rounded-xl bg-[#c96778] text-sm font-semibold text-white shadow-md shadow-[#c96778]/20 transition-all hover:bg-[#ad5064] hover:shadow-lg"
                     >
+                      {!login.isPending && <ArrowRight className="mr-2 size-4" />}
                       Login Account
-                      <ArrowRight className="ml-2 size-4" />
                     </Button>
                   </FieldGroup>
                 </Fieldset>
@@ -153,7 +179,7 @@ export default function LoginForm({
                 </Field>
 
                 <FieldDescription className="pt-2 text-center text-sm text-[#987b7e]">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link
                     href="/sign-up"
                     className="font-semibold text-[#b94f64] underline-offset-4 hover:underline"
@@ -171,32 +197,26 @@ export default function LoginForm({
                 alt="Glowora beauty and skincare collection"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-
               <div className="absolute inset-0 bg-gradient-to-t from-[#512d35]/85 via-[#6e3d45]/10 to-[#fff4f0]/10" />
-
               <div className="absolute left-8 right-8 top-9">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/50 bg-white/60 px-4 py-2 text-xs font-medium text-[#713944] backdrop-blur-md">
                   <Sparkles className="size-3.5" />
                   YOUR BEAUTY, OUR PASSION
                 </span>
               </div>
-
               <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10 text-white">
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[#ffe0d9]">
                   Discover Your Glow
                 </p>
-
                 <h2 className="max-w-md text-4xl font-serif font-semibold leading-tight lg:text-5xl">
                   Glow Naturally,
                   <br />
                   Look Beautiful.
                 </h2>
-
                 <p className="mt-4 max-w-sm text-sm leading-7 text-white/85">
                   Explore premium skincare, cosmetics, and everyday beauty
                   essentials made to celebrate your natural glow.
                 </p>
-
                 <div className="mt-7 flex items-center gap-3">
                   <div className="h-px w-10 bg-[#f2bdba]" />
                   <span className="text-xs tracking-widest text-[#ffe0d9]">
@@ -209,25 +229,18 @@ export default function LoginForm({
         </Card>
 
         <p className="mt-6 text-center text-xs leading-6 text-[#a78b8d]">
-          By creating an account, you agree to our{" "}
-          <a
-            href="/terms"
-            className="text-[#b94f64] underline underline-offset-4"
-          >
+          By signing in, you agree to our{" "}
+          <a href="/terms" className="text-[#b94f64] underline underline-offset-4">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a
-            href="/privacy"
-            className="text-[#b94f64] underline underline-offset-4"
-          >
+          <a href="/privacy" className="text-[#b94f64] underline underline-offset-4">
             Privacy Policy
           </a>
           .
         </p>
-
         <p className="mt-3 text-center font-serif text-sm italic text-[#c69a9e]">
-          Beauty is not just a look, it’s a feeling ♡
+          Beauty is not just a look, it&apos;s a feeling ♡
         </p>
       </div>
     </div>
