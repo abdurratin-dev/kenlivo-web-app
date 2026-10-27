@@ -1,0 +1,16 @@
+# Production: builds the optimized standalone Next.js server.
+# NEXT_PUBLIC_* values are baked at build time, so pass them as build args.
+# Usage: docker compose -f docker-compose.prod.yml up -d --build
+services:
+  web:
+    build:
+      context: .
+      target: production
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://api.kenlivo.com/api/v1}
+        NEXT_PUBLIC_BETTER_AUTH_URL: ${NEXT_PUBLIC_BETTER_AUTH_URL:-https://kenlivo.com}
+    restart: always
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
