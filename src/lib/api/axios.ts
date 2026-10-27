@@ -6,7 +6,7 @@ import axios, {
 import { tokenStore } from "./token-store";
 
 const baseURL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:7000/api/v1";
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4070/api/v1";
 
 /** Shared axios instance for the Kenlivo API. */
 export const api = axios.create({
@@ -65,7 +65,15 @@ api.interceptors.response.use(
 /** Normalizes an axios error into a human-readable message. */
 export function getApiErrorMessage(error: unknown, fallback = "Something went wrong"): string {
   if (axios.isAxiosError(error)) {
-    return (error.response?.data as { message?: string } | undefined)?.message ?? error.message ?? fallback;
+    const data = error.response?.data;
+    // Guard against HTML error pages returned when the server is down.
+    if (typeof data === "object" && data !== null) {
+      return (data as { message?: string }).message ?? error.message ?? fallback;
+    }
+    if (error.response?.status === 503 || error.response?.status === 502) {
+      return "Server is temporarily unavailable. Please try again shortly.";
+    }
+    return error.message ?? fallback;
   }
   return error instanceof Error ? error.message : fallback;
 }
