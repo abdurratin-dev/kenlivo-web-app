@@ -1,6 +1,7 @@
 # Local development: Next.js frontend with hot reload.
-# The API runs separately (see ../kenlivo-server/docker-compose.yml) on port 7000.
+# The API runs separately (see ../kenlivo-server/docker-compose.yml) on port 4070.
 # Usage: docker compose up --build
+# For file-watch auto-reload: docker compose watch
 services:
   web:
     build:
@@ -9,6 +10,11 @@ services:
     restart: unless-stopped
     env_file:
       - .env.development
+    environment:
+      # Enable polling so file changes on Windows host propagate into the Linux container
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=500
     ports:
       - "5170:5170"
     volumes:
@@ -16,3 +22,21 @@ services:
       - ./public:/app/public
       - ./next.config.ts:/app/next.config.ts
       - /app/.next
+    develop:
+      watch:
+        # Sync source changes instantly — Next.js dev server hot-reloads automatically
+        - action: sync
+          path: ./src
+          target: /app/src
+        - action: sync
+          path: ./public
+          target: /app/public
+        # Config change needs a full restart
+        - action: sync+restart
+          path: ./next.config.ts
+          target: /app/next.config.ts
+        # Dependency changes need a full rebuild
+        - action: rebuild
+          path: ./package.json
+        - action: rebuild
+          path: ./pnpm-lock.yaml
