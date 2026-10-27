@@ -1,0 +1,18 @@
+# Local development: Next.js frontend with hot reload.
+# The API runs separately (see ../kenlivo-server/docker-compose.yml) on port 7000.
+# Usage: docker compose up --build
+services:
+  web:
+    build:
+      context: .
+      target: development
+    restart: unless-stopped
+    env_file:
+      - .env.development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./next.config.ts:/app/next.config.ts
+      - /app/.next
