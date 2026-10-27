@@ -1,2 +1,2 @@
-minimumReleaseAgeExclude:
-  - axios@1.21.0
+allowBuilds:
+  unrs-resolver: true
