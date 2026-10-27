@@ -8,9 +8,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-playfair);
+  --font-script: var(--font-great-vibes);
   --color-brand: oklch(0.72 0.13 220);
   --color-brand-foreground: oklch(0.985 0 0);
   --color-sidebar-ring: var(--sidebar-ring);
