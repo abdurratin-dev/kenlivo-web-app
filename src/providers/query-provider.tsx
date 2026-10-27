@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Agentation } from "agentation";
 
 export function QueryProvider({ children }: { children: ReactNode }) {
   // One client per browser session, created lazily so it is never shared
@@ -24,7 +25,10 @@ export function QueryProvider({ children }: { children: ReactNode }) {
     <QueryClientProvider client={client}>
       {children}
       {process.env.NODE_ENV === "development" ? (
-        <ReactQueryDevtools initialIsOpen={false} />
+        <>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Agentation />
+        </>
       ) : null}
     </QueryClientProvider>
   );
