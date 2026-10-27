@@ -3,6 +3,7 @@ import { Playfair_Display } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import "./globals.css";
 import Footer from "@/components/layout/footer";
+import { QueryProvider } from "@/providers/query-provider";
 
 // Fills `--font-playfair`, which `font-heading` (see globals.css) resolves to.
 const playfairDisplay = Playfair_Display({
@@ -23,12 +24,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${playfairDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        
-        <Navbar />
-        <main className="bg-[#FFF9F2]">
-        {children}
-        </main>
-        <Footer />
+        <QueryProvider>
+          <Navbar />
+          <main className="bg-[#FFF9F2]">
+            {children}
+          </main>
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );
