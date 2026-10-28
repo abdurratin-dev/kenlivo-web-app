@@ -3,149 +3,121 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Heart, LogIn, Search, ShoppingBag, User } from "lucide-react";
+import { Heart, LogIn, Search, ShoppingBag, Truck, User, ShieldCheck } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/makeup", label: "Makeup" },
-  { href: "/skincare", label: "Skincare" },
-  { href: "/haircare", label: "Haircare" },
+  { href: "/category/makeup", label: "Makeup" },
+  { href: "/category/skincare", label: "Skincare" },
+  { href: "/category/haircare", label: "Haircare" },
+  { href: "/category/fragrance", label: "Fragrance" },
+  { href: "/category/tools-accessories", label: "Tools & Accessories" },
   { href: "/brands", label: "Brands" },
-  {href: "/offers",label: 'Offers'}
+  { href: "/offers", label: "Offers" },
 ];
 
-// Placeholder until bookings are wired up to a real store.
-const bookingCount = 1;
-
-
 export function Navbar() {
-  const {data:sesion,error} = authClient.useSession();
-  const user = sesion?.user
-  const iconLinks = user ? [
-  { href: "/profile", label: "Account", Icon: User },
-  { href: "/destinations", label: "Saved destinations", Icon: Heart },
-] : [
-  { href: "/login", label: "Account", Icon: LogIn },
-  { href: "/destinations", label: "Saved destinations", Icon: Heart },
-]
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 z-50 w-full border-b bg-[#FFF9F2] transition-shadow duration-300 ${
-        scrolled ? "border-border shadow-md" : "border-transparent"
-      }`}
-    >
-      <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-        <div className="flex h-16 items-center gap-3 md:h-20 md:gap-6">
-          <Link
-            href="/"
-            className="flex shrink-0 items-center gap-3"
-            aria-label="Wanderlust home"
-          >
-            <span className="grid size-10 place-items-center rounded-full bg-[#B95770]/10 text-[#B95770] md:size-12">
-              <Compass className="size-5 md:size-6" aria-hidden="true" />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="font-heading text-2xl font-bold md:text-3xl text-[#302526]">
-                Kenlivo
-              </span>
-              <span className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-[#B95770] uppercase md:text-xs">
-                Beauty Meets Lifestyle
-              </span>
-            </span>
-          </Link>
+    <header className="fixed top-0 z-50 w-full">
+      {/* Announcement bar */}
+      {!scrolled && (
+        <div className="bg-brand-700 px-4 py-1.5 text-center text-[11px] font-medium text-white">
+          <span className="mr-6 inline-flex items-center gap-1.5">
+            <Truck className="size-3" /> Free shipping on orders over ৳ 1,000
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <ShieldCheck className="size-3" /> 100% Authentic Products
+          </span>
+        </div>
+      )}
 
-          <form
-            role="search"
-            action="/products"
-            className="relative mx-auto hidden h-11 w-full min-w-0 max-w-xl flex-1 items-center sm:flex md:h-12"
-          >
-            <Search
-              className="pointer-events-none absolute left-4 size-4 text-muted-foreground"
-              aria-hidden="true"
-            />
-            <input
-              type="search"
-              name="q"
-              aria-label="Search products"
-              placeholder="Search products ..."
-              className="h-full w-full rounded-full border border-[#B95770]/20 bg-[#B95770]/5 pr-14 pl-11 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-[#B95770]/40 focus:bg-[#FFF9F2]"
-            />
-            <button
-              type="submit"
-              aria-label="Search"
-              className="absolute right-1.5 grid h-8 w-10 place-items-center rounded-full bg-[#B95770] text-white transition-colors hover:bg-[#B95770]/90 md:h-9 md:w-11"
-            >
-              <Search className="size-4" aria-hidden="true" />
-            </button>
-          </form>
-
-          <div className="ml-auto flex shrink-0 items-center gap-1 md:ml-0 md:gap-3">
-            {iconLinks.map(({ href, label, Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                aria-label={label}
-                className="grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-[#B95770]/10 hover:text-[#B95770]"
-              >
-                <Icon className="size-5" aria-hidden="true" />
-              </Link>
-            ))}
-            <Link
-              href="/orders"
-              aria-label={`My bookings ( trip)`}
-              className="relative grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-[#B95770]/10 hover:text-[#B95770]"
-            >
-              <ShoppingBag className="size-5" aria-hidden="true" />
-              <span className="absolute top-1 right-1 grid size-4 place-items-center rounded-full bg-[#B95770] text-[10px] leading-none font-semibold text-white">
-                
+      {/* Main navbar */}
+      <div className={`border-b bg-bg-page transition-shadow duration-300 ${scrolled ? "shadow-md border-brand-300" : "border-transparent"}`}>
+        <div className="mx-auto max-w-screen-xl px-4 md:px-8">
+          <div className="flex h-16 items-center gap-4 md:h-[70px] md:gap-6">
+            {/* Logo */}
+            <Link href="/" className="flex shrink-0 items-center gap-2.5">
+              <span className="grid size-9 place-items-center rounded-full bg-brand-700 text-white md:size-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                  <line x1="9" y1="9" x2="9.01" y2="9"/>
+                  <line x1="15" y1="9" x2="15.01" y2="9"/>
+                </svg>
+              </span>
+              <span className="flex flex-col leading-none">
+                <span className="font-heading text-xl font-bold text-dark-900 md:text-2xl">Kenlivo</span>
+                <span className="text-[9px] font-semibold tracking-[0.16em] text-brand-700 uppercase">Beauty Meets Lifestyle</span>
               </span>
             </Link>
-          </div>
-        </div>
 
-        <div
-          className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
-            scrolled ? "grid-rows-[0fr]" : "grid-rows-[1fr]"
-          }`}
-        >
-          <div className="min-h-0 overflow-hidden">
-            <nav
-              aria-label="Main"
-              inert={scrolled}
-              className="flex h-11 items-center gap-6 overflow-x-auto md:justify-center md:gap-9 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+            {/* Search */}
+            <form role="search" action="/products" className="relative mx-auto hidden h-10 w-full max-w-lg flex-1 items-center sm:flex md:h-11">
+              <Search className="pointer-events-none absolute left-3.5 size-4 text-muted-500" aria-hidden="true" />
+              <input
+                type="search"
+                name="q"
+                placeholder="Search products, brands and more..."
+                className="h-full w-full rounded-full border border-brand-400 bg-white pr-12 pl-10 text-sm text-dark-900 outline-none placeholder:text-muted-400 focus:border-brand-700/50 focus:ring-2 focus:ring-brand-700/10"
+              />
+              <button type="submit" className="absolute right-1.5 grid h-8 w-9 place-items-center rounded-full bg-brand-700 text-white hover:bg-brand-800">
+                <Search className="size-3.5" />
+              </button>
+            </form>
 
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`shrink-0 text-sm whitespace-nowrap transition-colors md:text-base ${
-                      isActive
-                        ? "font-semibold text-[#B95770] underline decoration-2 underline-offset-4"
-                        : "font-medium text-foreground hover:text-[#B95770]"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
+            {/* Icons */}
+            <div className="ml-auto flex shrink-0 items-center gap-1 md:ml-0">
+              {user ? (
+                <Link href="/profile" aria-label="Account" className="grid size-9 place-items-center rounded-full text-dark-900 hover:bg-brand-700/10 hover:text-brand-700">
+                  <User className="size-5" />
+                </Link>
+              ) : (
+                <Link href="/login" aria-label="Sign in" className="grid size-9 place-items-center rounded-full text-dark-900 hover:bg-brand-700/10 hover:text-brand-700">
+                  <LogIn className="size-5" />
+                </Link>
+              )}
+              <Link href="/wishlist" aria-label="Wishlist" className="grid size-9 place-items-center rounded-full text-dark-900 hover:bg-brand-700/10 hover:text-brand-700">
+                <Heart className="size-5" />
+              </Link>
+              <Link href="/cart" aria-label="Cart" className="relative grid size-9 place-items-center rounded-full text-dark-900 hover:bg-brand-700/10 hover:text-brand-700">
+                <ShoppingBag className="size-5" />
+                <span className="absolute -top-0.5 -right-0.5 grid size-4 place-items-center rounded-full bg-brand-700 text-[9px] font-bold leading-none text-white">0</span>
+              </Link>
+            </div>
           </div>
+
+          {/* Nav links */}
+          <nav className="flex h-10 items-center gap-5 overflow-x-auto border-t border-brand-300 md:justify-center md:gap-8 [scrollbar-width:none]">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`shrink-0 text-[13px] whitespace-nowrap transition-colors md:text-sm ${
+                    isActive
+                      ? "font-semibold text-brand-700 underline decoration-2 underline-offset-4"
+                      : "font-medium text-dark-700 hover:text-brand-700"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
       </div>
     </header>
